@@ -1,0 +1,25 @@
+#!/bin/sh 
+
+obj_dir=$1
+
+
+all_objs=`find $obj_dir -name '*.o'`
+
+for obj_file in $all_objs ;
+do
+    tmp=`echo ${obj_file##*$obj_dir}|awk -F '.' '{print $1}'`
+    c_src_file=$tmp".c"
+    if [  -f "$c_src_file" ];then
+        echo $c_src_file
+        continue
+    fi
+
+    asm_src_file=$tmp".S"
+    if [  -f "$asm_src_file" ];then
+        echo $asm_src_file
+        continue
+    fi
+
+
+done
+
